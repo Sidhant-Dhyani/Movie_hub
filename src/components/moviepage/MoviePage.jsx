@@ -1,14 +1,20 @@
 
 import React, { useEffect, useState } from 'react'
 import './MoviePage.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const MoviePage = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const id = params.id;
     const [movie, setMovie] = useState();
+
+    const handleClick = () => {
+        navigate(`/form/${id}`);
+    }
+
     useEffect(() => {
         const fetchMovie = async () => {
             try {
@@ -37,10 +43,10 @@ const MoviePage = () => {
                 <p> <span>Type: </span>{movie?.type}</p>
                 <p><span>Official Site: </span> <Link to={movie?.officialSite} target='_blank'>{movie?.officialSite}</Link></p>
                 <p dangerouslySetInnerHTML={{ __html: movie?.summary }} ></p>
+                <button className='know_more' onClick={handleClick}>Book Now</button>
             </div>
         </div>
     )
 }
 
 export default MoviePage;
-
